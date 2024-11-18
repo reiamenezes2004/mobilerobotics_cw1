@@ -19,4 +19,32 @@ rospy.init_node('turtlesim_teleoperation', anonymous=True)
 pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
 rate = rospy.Rate(10)  # 10 Hz
 
+# creating a twist message
+twist = Twist()
+
+# defining the key presses and release functions
+def on_press(key):
+    global speed, turn_speed
+    try:
+        if key.char in move_bindings:
+            # sets the movement based on the key pressed
+            linear, angular = move_bindings[key.char]
+            twist.linear.x = linear * speed
+            twist.angular.z = angular * turn_speed
+            pub.publish(twist)
+        elif key.char == 's':  # asks the user for a new speed input
+            try:
+                # user inputted new linear speed
+                new_speed = float(input("Enter new linear speed (m/s): "))
+                # user inputted new angular speed
+                new_turn_speed = float(input("Enter new angular speed (rad/s): "))
+                # speed changes to updated variables
+                speed = new_speed
+                turn_speed = new_turn_speed
+                print(f"Updated speed: Linear = {speed} m/s, Angular = {turn_speed} rad/s")
+            except ValueError:
+                print("Invalid input. Please enter numebers only.")
+    except AttributeError:
+        pass
+
 

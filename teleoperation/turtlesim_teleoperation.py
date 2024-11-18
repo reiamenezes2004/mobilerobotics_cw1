@@ -56,6 +56,16 @@ def on_release(key):
     if key == keyboard.Key.esc:
         return False
 
+# main print function to run the turtle teleoperation
+def teleop_turtle_with_hold():
+    print("Control Your Turtle! Press 'f', 'b', 'l', 'r' to move and release to stop.")
+    print("Press 's' to input new speed values for linear and angular speed.")
+    print("Press 'esc' to exit.")
+
+    #keyboard listener
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        listener.join()  
+
 
 
 

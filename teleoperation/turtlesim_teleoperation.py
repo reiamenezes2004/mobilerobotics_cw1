@@ -66,6 +66,12 @@ def teleop_turtle_with_hold():
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()  
 
+# run the teleoperation function
+if __name__ == '__main__':
+    try:
+        teleop_turtle_with_hold()
+    except rospy.ROSInterruptException:
+        pass
 
 
 
